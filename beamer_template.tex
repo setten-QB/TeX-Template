@@ -1,0 +1,162 @@
+\documentclass[dvipdfmx,fleqn]{beamer}
+%----------------------------------------------------------------------------------------------------
+% package
+%----------------------------------------------------------------------------------------------------
+% 数式関係
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{braket}
+% ハイパーリンク
+\usepackage{hyperref}
+% その他
+%\usepackage[usenames]{color}
+\usepackage{tcolorbox}
+\tcbuselibrary{raster,skins}
+\usepackage{varwidth}
+\usepackage{tikz}
+
+%------------------------------------------------------------------------------------------------
+%コマンド
+%------------------------------------------------------------------------------------------------
+% vector
+\renewcommand{\vec}[1]{\mbox{\boldmath $#1$}}
+% natural number
+\newcommand{\N}{\mathbb{N}}
+% real number
+\newcommand{\R}{\mathbb{R}}
+% Expectation
+\newcommand{\E}[1]{\mathbb{E}\left[ #1 \right] }
+% such that
+\newcommand{\st}{\quad \textrm{s.t.} \quad}
+% vector x
+\newcommand{\bx}{\mathbf{x}}
+% iid
+\newcommand{\iid}{\stackrel{iid}{\sim}}
+% Gaussian
+\newcommand{\gaussian}[2]{\mathcal{N}\left( #1,#2\right) }
+% kernel map
+\newcommand{\mapK}{{\sf K}}
+% new observed data
+\newcommand{\ndata}{{\mathbf{x}^*}}
+% diagonal
+\newcommand{\diag}{\textrm{diag~}}
+% 行列
+\newcommand{\kmatI}{{K^{[L]}}}
+\newcommand{\kmatP}{{K^{[P]}}}
+% 1のベクトル
+\newcommand{\idv}{\mathbf{1}}
+% trace
+\newcommand{\tr}{\textrm{tr}\,}
+
+%----------------------------------------------------------------------------------------------------
+% スライドの設定
+%----------------------------------------------------------------------------------------------------
+\usetheme{Singapore}
+\AtBeginShipoutFirst{\special{pdf:tounicode EUC-UCS2}}
+\usepackage{minijs}
+\ifnum 42146=\euc"A4A2 \AtBeginDvi{\special{pdf:tounicode EUC-UCS2}}\else
+\AtBeginDvi{\special{pdf:tounicode 90ms-RKSJ-UCS2}}\fi
+\renewcommand{\kanjifamilydefault}{\gtdefault}
+\usefonttheme{professionalfonts}
+\setbeamertemplate{navigation symbols}{}
+\AtBeginSection[]{
+	\frame{\tableofcontents[currentsection, hideallsubsections]} %目次スライド
+}
+% 色定義
+\definecolor{mstruct}{RGB}{68, 174, 234} 
+% \definecolor{malert}{RGB}{223, 153, 155}
+\definecolor{malert}{RGB}{255, 76, 0}
+\definecolor{mex}{RGB}{57, 149, 82}
+% 見出しカラー
+\setbeamercolor{structure}{fg=mstruct}
+% block title color
+\setbeamercolor{block title}{fg=bstruct}
+% alert color
+\setbeamercolor{alerted text}{fg=malert}
+% 箇条書き
+\useinnertheme{circles}
+% フッダー
+\setbeamertemplate{footline}[frame number]
+
+%------------------------------------------------------------------------------------------------
+% Box
+%------------------------------------------------------------------------------------------------
+% Theorem Box
+\newtcolorbox{tblock}[1]{
+	enhanced, skin=enhancedlast jigsaw,
+	attach boxed title to top left={xshift=-4mm,yshift=-0.5mm},
+	colbacktitle=mstruct, colframe=mstruct,
+	interior style={top color=mstruct!10!white, bottom color=white},
+	boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+	underlay boxed title={
+		\fill[mstruct] (title.north west) -- (title.north east)
+		-- +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)
+		-- ([xshift=4mm,yshift=0.5mm]frame.north east) -- +(0mm,-1mm)
+		-- (title.south west) -- cycle;
+		\fill[mstruct!45!white!50!black] ([yshift=-0.5mm]frame.north west)
+		-- +(-0.4,0) -- +(0,-0.3) -- cycle;
+		\fill[mstruct!45!white!50!black] ([yshift=-0.5mm]frame.north east)
+		-- +(0,-0.3) -- +(0.4,0) -- cycle; 
+	},
+	title=#1
+}
+% Definition Box
+\newtcolorbox{dblock}[1]{enhanced, skin=enhancedlast jigsaw,
+	attach boxed title to top left={xshift=-4mm,yshift=-0.5mm},
+	colbacktitle=malert, colframe=malert,
+	interior style={top color=malert!10!white, bottom color=white},
+	boxed title style={empty,arc=0pt,outer arc=0pt,boxrule=0pt},
+	underlay boxed title={
+		\fill[malert] (title.north west) -- (title.north east)
+		-- +(\tcboxedtitleheight-1mm,-\tcboxedtitleheight+1mm)
+		-- ([xshift=4mm,yshift=0.5mm]frame.north east) -- +(0mm,-1mm)
+		-- (title.south west) -- cycle;
+		\fill[malert!45!white!50!black] ([yshift=-0.5mm]frame.north west)
+		-- +(-0.4,0) -- +(0,-0.3) -- cycle;
+		\fill[malert!45!white!50!black] ([yshift=-0.5mm]frame.north east)
+		-- +(0,-0.3) -- +(0.4,0) -- cycle; 
+	},
+	title=#1
+}
+% subbox
+\newtcolorbox{subbox}[1]{
+	empty,
+	coltitle=mstruct, fonttitle=\bfseries,
+	borderline horizontal={0.5mm}{0pt}{mstruct},
+	title=#1
+	titlerule style={
+		mstruct,
+		arrows={Hooks[arc=270]-Hooks[arc=270]}
+	}
+}
+%------------------------------------------------------------------------------------------------
+% title
+%------------------------------------------------------------------------------------------------
+\title{Title}
+\author{First Author \thanks{Affiliation}
+	\quad Second Author \thanks{Affiliation}
+}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+	\titlepage
+\end{frame}
+
+\begin{frame}{Frame title}
+	\begin{tblock}{Frame title}
+		\tcbsubtitle{Frame subtitle}
+		documents
+		\tcbsubtitle{Frame subtitle}
+		documents
+	\end{tblock}
+\end{frame}
+
+\begin{frame}{title}
+	\begin{dblock}{title}
+		\tcbsubtitle{subtitle}
+		document
+	\end{dblock}
+\end{frame}
+\end{document}
